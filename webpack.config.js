@@ -2,7 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-    mode: 'production',
+    mode: 'development',
     target: 'web',
     experiments: {
         outputModule: true,
@@ -32,7 +32,6 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './index.html',
             // inject: false,
-            favicon: './src/assets/icons/cloudy.svg',
             scriptLoading: 'module',
         }),
     ],
