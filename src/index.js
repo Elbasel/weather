@@ -14,16 +14,11 @@ async function getWeatherData(cityName) {
 async function setTodayWeatherUI(cityName) {
     const tempData = await getWeatherData(cityName)
     const mainTemperatureElement = document.querySelector('h2')
-
+    const mainTemperatureTextElement = document.querySelector(
+        'body > main > div > p.text',
+    )
     mainTemperatureElement.textContent = Math.round(tempData.main.temp)
-
-    // const todayMinMaxTemperatureElement = document.querySelector(
-    //     'body > div > div:nth-child(1) > p.temp',
-    // )
-    // const todayMaxTemp = `${Math.round(tempData.main.temp_max)}° / ${Math.round(
-    //     tempData.main.temp_min,
-    // )}°`
-    // todayMinMaxTemperatureElement.textContent = todayMaxTemp
+    mainTemperatureTextElement.textContent = tempData.weather[0].main
 }
 
 async function getForecastData(cityName) {
