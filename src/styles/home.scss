@@ -1,4 +1,5 @@
 @use './base.scss' as *;
+@use './animations.scss';
 
 body {
     display: flex;
@@ -6,8 +7,8 @@ body {
 }
 
 .wrapper {
-    border: 1px solid white;
     flex: 1;
+    animation: fade-in 1s;
 }
 
 .wrapper {
@@ -115,10 +116,6 @@ button {
         height: 60px;
         background-image: url('../assets/icons/day.svg');
         margin-left: -20px;
-    }
-
-    .temp {
-        animation: fade-in 5s;
     }
 }
 

@@ -41,3 +41,5 @@ async function getForecastDataClean(cityName) {
 
     return forecastData
 }
+
+export { getWeatherData, getForecastDataClean }

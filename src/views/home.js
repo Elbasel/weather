@@ -1,8 +1,8 @@
-import switchPage from '../app'
+import switchPage from '../index'
 import svgs from './svgs'
 import '../styles/home.scss'
 
-function getDayAfterTomorrow() {
+function getDayAfterTomorrowName() {
     const afterTomorrowDayName = new Date()
     afterTomorrowDayName.setDate(afterTomorrowDayName.getDate() + 2)
     return afterTomorrowDayName.toLocaleDateString('en-us', {
@@ -10,7 +10,7 @@ function getDayAfterTomorrow() {
     })
 }
 
-function Header() {
+function Header(cityName) {
     const header = document.createElement('header')
 
     const addCityButton = document.createElement('button')
@@ -20,7 +20,7 @@ function Header() {
     })
 
     const cityNameHeading = document.createElement('h1')
-    cityNameHeading.textContent = 'Cairo'
+    cityNameHeading.textContent = cityName
 
     const refreshButton = document.createElement('button')
     refreshButton.className = 'refresh'
@@ -37,7 +37,7 @@ function Header() {
     return header
 }
 
-function Main() {
+function Main(temp, weatherText) {
     const main = document.createElement('main')
 
     function weatherDiv() {
@@ -45,7 +45,7 @@ function Main() {
         weatherDiv.className = 'weather'
 
         const h2Temp = document.createElement('h2')
-        h2Temp.textContent = '$$'
+        h2Temp.textContent = temp
 
         const degreeSuffix = document.createElement('p')
         degreeSuffix.className = 'degree'
@@ -53,7 +53,7 @@ function Main() {
 
         const weatherStatusText = document.createElement('p')
         weatherStatusText.className = 'text'
-        weatherStatusText.textContent = '{text}'
+        weatherStatusText.textContent = weatherText
 
         weatherDiv.append(h2Temp, degreeSuffix, weatherStatusText)
         return weatherDiv
@@ -63,11 +63,11 @@ function Main() {
     return main
 }
 
-function ForecastDiv() {
+function ForecastDiv(todayMinMax, tomorrowMinMax, dayAfterTomorrowMinMax) {
     const forecastDiv = document.createElement('div')
     forecastDiv.className = 'forecast'
 
-    function Row(dayName) {
+    function Row(dayName, minTemp, maxTemp) {
         const row = document.createElement('div')
         row.className = 'row'
 
@@ -80,25 +80,33 @@ function ForecastDiv() {
 
         const temp = document.createElement('p')
         temp.className = 'temp'
-        temp.textContent = '$$° / $$°'
+        temp.textContent = `${minTemp}° / ${maxTemp}°`
 
         row.append(svgDiv, day, temp)
         return row
     }
 
     forecastDiv.append(
-        Row('Today'),
-        Row('Tomorrow'),
-        Row(getDayAfterTomorrow()),
+        Row('Today', todayMinMax.minTemp, todayMinMax.maxTemp),
+        Row('Tomorrow', tomorrowMinMax.minTemp, tomorrowMinMax.maxTemp),
+        Row(
+            getDayAfterTomorrowName(),
+            dayAfterTomorrowMinMax.minTemp,
+            dayAfterTomorrowMinMax.maxTemp,
+        ),
     )
     return forecastDiv
 }
 
-function Home() {
+function Home(cityName, currentTemp, weatherText, forecastData) {
     const wrapper = document.createElement('div')
     wrapper.className = 'wrapper'
 
-    wrapper.append(Header(), Main(), ForecastDiv())
+    wrapper.append(
+        Header(cityName),
+        Main(currentTemp, weatherText),
+        ForecastDiv(forecastData[0], forecastData[1], forecastData[2]),
+    )
     return wrapper
 }
 
