@@ -1,0 +1,21 @@
+@use 'reset.css';
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,900&display=swap');
+
+$primary-dark: #181a1b;
+$secondary-dark: #2b2f31;
+$dark-blue: #004daa;
+$text-white: #d8d4cf;
+$caption-white: #e8e6e3;
+$primary-font: 'Nunito', sans-serif;
+
+html {
+    height: -webkit-fill-available;
+}
+
+body {
+    height: 100vh;
+    height: -webkit-fill-available;
+    background-image: url('../assets/night.jpg');
+    background-size: cover;
+}
