@@ -20,7 +20,7 @@ function Header(cityName) {
     })
 
     const cityNameHeading = document.createElement('h1')
-    cityNameHeading.textContent = cityName
+    cityNameHeading.textContent = cityName[0].toUpperCase() + cityName.slice(1)
 
     const refreshButton = document.createElement('button')
     refreshButton.className = 'refresh'

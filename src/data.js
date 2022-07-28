@@ -17,6 +17,7 @@ async function getForecastData(cityName) {
 
 async function getForecastDataClean(cityName) {
     const forecastData = new Map()
+
     const tempData = await getForecastData(cityName)
     for (const day of tempData.list) {
         // convert from seconds to milliseconds

@@ -1,4 +1,5 @@
 import Home from './views/home'
+import AddCityDiv from './views/addCity'
 import { getWeatherData, getForecastDataClean } from './data'
 
 async function switchPage(pageName, ...args) {
@@ -6,14 +7,13 @@ async function switchPage(pageName, ...args) {
     let component
 
     if (pageName === 'homepage') {
-        const cityName = args[0]
+        if (args[0]) {
+            localStorage.setItem('cityName', args[0])
+        }
+        let cityName = args[0] || localStorage.getItem('cityName')
+
         const weatherData = await getWeatherData(cityName)
         const forecastData = await getForecastDataClean(cityName)
-
-        // const data = new Map()
-        // data.set(28, { minTemp: 10, maxTemp: 20 })
-        // data.set(29, { minTemp: 20, maxTemp: 30 })
-        // data.set(30, { minTemp: 30, maxTemp: 40 })
 
         const todayDayNum = new Date().getDate()
 
@@ -41,6 +41,8 @@ async function switchPage(pageName, ...args) {
             weatherData.weather[0].main,
             [todayMinMax, tomorrowMinMax, dayAfterTomorrowMinMax],
         )
+    } else if (pageName === 'addCityPage') {
+        component = AddCityDiv()
     }
 
     document.body.append(component)
