@@ -1,4 +1,3 @@
-# boilerplate
+# Weather App
 
-
-# Webpack Boilerplate to start a new project
+pracise project for using Promises / Fetch API
