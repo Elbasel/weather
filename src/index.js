@@ -1,5 +1,6 @@
 import Home from './views/home'
 import AddCityDiv from './views/addCity'
+import SettingsPage from './views/settings'
 import { getWeatherData, getForecastDataClean } from './data'
 
 async function switchPage(pageName, ...args) {
@@ -43,6 +44,8 @@ async function switchPage(pageName, ...args) {
         )
     } else if (pageName === 'addCityPage') {
         component = AddCityDiv()
+    } else if (pageName === 'settingsPage') {
+        component = SettingsPage()
     }
 
     document.body.append(component)
