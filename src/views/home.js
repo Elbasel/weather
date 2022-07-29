@@ -10,6 +10,46 @@ function getDayAfterTomorrowName() {
     })
 }
 
+function animate(elements, animation) {
+    elements.forEach((element) => {
+        element.classList.remove(animation)
+        setTimeout(() => {
+            element.classList.add(animation)
+        }, 100)
+    })
+}
+
+function displayError(error, timeout) {
+    const errorDiv = document.createElement('div')
+    errorDiv.classList.add('error-div')
+    errorDiv.textContent = error
+    document.body.append(errorDiv)
+
+    setTimeout(() => {
+        errorDiv.style.display = 'none'
+    }, timeout)
+}
+
+function refreshData(
+    newTemp,
+    newText,
+    todayMinMax,
+    tomorrowMinMax,
+    dayAfterTomorrowMinMax,
+) {
+    document.querySelector('h2').textContent = newTemp
+    document.querySelector('.text').textContent = newText
+    document.querySelector(
+        '.row:nth-child(1) > .temp',
+    ).textContent = `${todayMinMax.minTemp}° / ${todayMinMax.maxTemp}°`
+    document.querySelector(
+        '.row:nth-child(2) > .temp',
+    ).textContent = `${tomorrowMinMax.minTemp}° / ${tomorrowMinMax.maxTemp}°`
+    document.querySelector(
+        '.row:nth-child(3) > .temp',
+    ).textContent = `${dayAfterTomorrowMinMax.minTemp}° / ${dayAfterTomorrowMinMax.maxTemp}°`
+}
+
 function Header(cityName) {
     const header = document.createElement('header')
 
@@ -25,6 +65,13 @@ function Header(cityName) {
     const refreshButton = document.createElement('button')
     refreshButton.className = 'refresh'
     refreshButton.innerHTML = svgs.refresh
+    refreshButton.addEventListener('click', () => {
+        animate([refreshButton], 'rotate')
+        animate([document.querySelector('h2')], 'fade-in')
+        animate([document.querySelector('.text')], 'fade-in')
+        animate(document.querySelectorAll('.temp'), 'fade-in')
+        switchPage('refreshData')
+    })
 
     const settingsButton = document.createElement('button')
     settingsButton.innerHTML = svgs.settings
@@ -37,10 +84,10 @@ function Header(cityName) {
     return header
 }
 
-function Main(temp, weatherText) {
+function Main(temp, weatherText, units) {
     const main = document.createElement('main')
 
-    function weatherDiv() {
+    function weatherDiv(units) {
         const weatherDiv = document.createElement('div')
         weatherDiv.className = 'weather'
 
@@ -49,7 +96,7 @@ function Main(temp, weatherText) {
 
         const degreeSuffix = document.createElement('p')
         degreeSuffix.className = 'degree'
-        degreeSuffix.textContent = '°C'
+        degreeSuffix.textContent = `°${units}`
 
         const weatherStatusText = document.createElement('p')
         weatherStatusText.className = 'text'
@@ -59,7 +106,7 @@ function Main(temp, weatherText) {
         return weatherDiv
     }
 
-    main.append(weatherDiv())
+    main.append(weatherDiv(units))
     return main
 }
 
@@ -98,16 +145,17 @@ function ForecastDiv(todayMinMax, tomorrowMinMax, dayAfterTomorrowMinMax) {
     return forecastDiv
 }
 
-function Home(cityName, currentTemp, weatherText, forecastData) {
+function Home(cityName, currentTemp, weatherText, forecastData, units = 'C') {
     const wrapper = document.createElement('div')
     wrapper.className = 'wrapper'
+    wrapper.classList.add('fade-in')
 
     wrapper.append(
         Header(cityName),
-        Main(currentTemp, weatherText),
+        Main(currentTemp, weatherText, units),
         ForecastDiv(forecastData[0], forecastData[1], forecastData[2]),
     )
     return wrapper
 }
 
-export default Home
+export { Home, refreshData, displayError }

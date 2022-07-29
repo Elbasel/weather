@@ -34,7 +34,6 @@ function Form() {
 
     const searchInput = document.createElement('input')
     searchInput.setAttribute('type', 'search')
-    console.log(searchInput)
 
     headDiv.append(searchInput)
     headDiv.innerHTML += '\n' + svgs.searchIcon
