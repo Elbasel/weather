@@ -75,7 +75,10 @@ async function switchPage(pageName, ...args) {
             )
         }
     } else if (pageName === 'refreshData') {
-        const weatherData = await getData(localStorage.getItem('cityName'))
+        const weatherData = await getData(
+            localStorage.getItem('cityName'),
+            localStorage.getItem('units'),
+        )
         refreshData(
             weatherData.currentTemp,
             weatherData.weatherText,
