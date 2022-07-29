@@ -97,6 +97,6 @@ async function switchPage(pageName, ...args) {
     }
 }
 
-switchPage('homepage', 'Cairo')
+switchPage('homepage', localStorage.getItem('cityName') || 'Cairo')
 
 export default switchPage
