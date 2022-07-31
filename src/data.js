@@ -39,6 +39,8 @@ async function getForecastDataClean(cityName, units = 'metric') {
         }
     }
 
+    console.log(forecastData)
+
     return forecastData
 }
 

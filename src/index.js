@@ -8,21 +8,27 @@ import './styles/settings.scss'
 async function getData(cityName, units) {
     const weatherData = await getWeatherData(cityName, units)
     const forecastData = await getForecastDataClean(cityName, units)
-    const todayDayNum = new Date().getDate()
 
     const todayMinMax = {}
     const tomorrowMinMax = {}
     const dayAfterTomorrowMinMax = {}
 
+    const today = new Date()
+
+    const tomorrow = new Date()
+    tomorrow.setDate(today.getDate() + 1)
+
+    const dayAfterTomorrow = new Date()
+    dayAfterTomorrow.setDate(today.getDate() + 2)
+
     forecastData.forEach((value, dayNum) => {
-        let diff = dayNum - todayDayNum
-        if (diff === 0) {
+        if (dayNum === today.getDate()) {
             todayMinMax.minTemp = Math.round(value.minTemp)
             todayMinMax.maxTemp = Math.round(value.maxTemp)
-        } else if (diff === 1) {
+        } else if (dayNum === tomorrow.getDate()) {
             tomorrowMinMax.minTemp = Math.round(value.minTemp)
             tomorrowMinMax.maxTemp = Math.round(value.maxTemp)
-        } else if (diff === 2) {
+        } else if (dayNum === dayAfterTomorrow.getDate()) {
             dayAfterTomorrowMinMax.minTemp = Math.round(value.minTemp)
             dayAfterTomorrowMinMax.maxTemp = Math.round(value.maxTemp)
         }
